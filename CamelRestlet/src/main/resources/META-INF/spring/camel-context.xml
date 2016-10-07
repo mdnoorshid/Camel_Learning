@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+ <bean id="calciPost" class="com.bizruntime.camel.restlet.camel.Calci_POST"></bean>
+ <bean id="calciGET" class="com.bizruntime.camel.restlet.camel.Calci_GET"></bean>
+ <bean id="consumejson1" class="com.bizruntime.camel.restlet.camel.ConsumeJSON1"></bean>
+ <bean id="consumejson2" class="com.bizruntime.camel.restlet.camel.ConsumeJSON2"></bean>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <!-- <route>
+      <from uri="restlet:http://localhost:8431/jsonRestlet_post/{headerVal}?restletMethod=POST"/>
+      <to uri="bean:calciPost"/>
+    </route> -->
+   <!--  <route>
+      <from uri="restlet:http://localhost:8431/jsonRestlet_get/{headerVal}?restletMethod=GET"/>
+      <to uri="bean:calciGET"/>
+    </route> -->
+    <!--  <route>
+      <from uri="restlet:http://localhost:8431/jsonRestlet_consume1?restletMethod=POST"/>
+      <to uri="bean:consumejson1"/>
+    </route> -->
+     <route>
+      <from uri="restlet:http://localhost:8431/jsonRestlet_consume2?restletMethod=POST"/>
+      <to uri="bean:consumejson2"/>
+    </route>
+    
+  </camelContext>
+
+</beans>
