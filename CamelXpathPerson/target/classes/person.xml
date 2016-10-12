@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<person>
+	<name>Noorshid</name>
+	<age>25</age>
+	<profession>
+	<type>Good</type>
+	<name>Doctor</name>
+	</profession>
+</person>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+
+
+	<cxf:cxfEndpoint id="camelCXFEndpoint"
+		address="http://localhost:8431/calculationService6/services/CalciServicePort"
+		wsdlURL="/media/noorshid/New Volume/BizRuntime/Workspaces/Camel/CalciWebservice/src/main/resources/calciservice.wsdl"
+		serviceName="CalciServiceService" endpointName="CalciServicePort"
+		xmlns="http://calciServ.camel.bizruntime.com/"/>
+
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+		<route>
+			<!-- route starts from the cxf webservice -->
+			<from uri="cxf:bean:camelCXFEndpoint" />
+			<to uri="http://localhost:8431/calculationService5/services/CalciServicePort"/>
+			<log message="Message Logged:: ${body}"/>
+		</route>
+	</camelContext>
+
+</beans>

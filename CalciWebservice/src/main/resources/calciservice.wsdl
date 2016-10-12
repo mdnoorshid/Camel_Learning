@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CalciServiceService" targetNamespace="http://calciServ.camel.bizruntime.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://calciServ.camel.bizruntime.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://calciServ.camel.bizruntime.com/" schemaLocation="calciservice_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="multiply">
+    <wsdl:part name="parameters" element="tns:multiply">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="divide">
+    <wsdl:part name="parameters" element="tns:divide">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="add">
+    <wsdl:part name="parameters" element="tns:add">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="divideResponse">
+    <wsdl:part name="parameters" element="tns:divideResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="subtractResponse">
+    <wsdl:part name="parameters" element="tns:subtractResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="subtract">
+    <wsdl:part name="parameters" element="tns:subtract">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addResponse">
+    <wsdl:part name="parameters" element="tns:addResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="multiplyResponse">
+    <wsdl:part name="parameters" element="tns:multiplyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CalciService">
+    <wsdl:operation name="multiply">
+      <wsdl:input name="multiply" message="tns:multiply">
+    </wsdl:input>
+      <wsdl:output name="multiplyResponse" message="tns:multiplyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="add">
+      <wsdl:input name="add" message="tns:add">
+    </wsdl:input>
+      <wsdl:output name="addResponse" message="tns:addResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="divide">
+      <wsdl:input name="divide" message="tns:divide">
+    </wsdl:input>
+      <wsdl:output name="divideResponse" message="tns:divideResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="subtract">
+      <wsdl:input name="subtract" message="tns:subtract">
+    </wsdl:input>
+      <wsdl:output name="subtractResponse" message="tns:subtractResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CalciServiceServiceSoapBinding" type="tns:CalciService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="multiply">
+      <soap:operation soapAction="urn:Multiply" style="document"/>
+      <wsdl:input name="multiply">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="multiplyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="add">
+      <soap:operation soapAction="urn:Add" style="document"/>
+      <wsdl:input name="add">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="divide">
+      <soap:operation soapAction="urn:Divide" style="document"/>
+      <wsdl:input name="divide">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="divideResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="subtract">
+      <soap:operation soapAction="urn:Subtract" style="document"/>
+      <wsdl:input name="subtract">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="subtractResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CalciServiceService">
+    <wsdl:port name="CalciServicePort" binding="tns:CalciServiceServiceSoapBinding">
+      <soap:address location="http://localhost:8431/calculationService5/services/CalciServicePort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

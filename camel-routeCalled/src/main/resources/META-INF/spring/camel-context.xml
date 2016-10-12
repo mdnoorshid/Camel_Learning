@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context-->
+<!-- Camel route Called -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+
+<bean id="routecalled" class="com.bizruntime.routecalled.RouteCalled"></bean>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+        <from uri="restlet:http://localhost:8431/jsonRestletCalled?restletMethod=POST"/>
+        <to uri="bean:routecalled"/>
+    </route>
+</camelContext>
+
+</beans>

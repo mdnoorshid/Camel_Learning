@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+
+	<bean id="testBean" class="com.bizruntime.testsoap.TestBean" />
+	<cxf:cxfEndpoint id="camelCXFEndpoint"
+		address="www.webservicex.net/globalweather.asmx"
+		wsdlURL="globalweather.wsdl" serviceName="GlobalWeather"
+		endpointName="GlobalWeatherSoap" xmlns="http://www.webserviceX.NET"/>
+		<bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor">
+        <!--  it really should have been user-prestream but CXF does have such phase! -->
+        <constructor-arg value="target/write"/> 
+        <property name="loggingFeatureEnabled" value="true"/>
+   </bean>
+         
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+		<route>		
+			<from uri="cxf:bean:camelCXFEndpoint?dataFormat=MESSAGE"/>			
+			<log message="body : ${body}"/>
+		</route>
+	</camelContext>
+<http:conduit name="*.http-conduit">
+		<http:client AllowChunking="false" MaxRetransmits="11"
+			Connection="Keep-Alive" ReceiveTimeout="60000" CacheControl="No-Cache" />
+	</http:conduit>
+
+</beans>

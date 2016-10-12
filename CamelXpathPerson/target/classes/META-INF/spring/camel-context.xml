@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+   
+	<bean id="doctorProcessor" class="com.bizruntime.xpath.person.DoctorProcessor"></bean>
+	<bean id="lawyerProcessor" class="com.bizruntime.xpath.person.LawyerProcessor"></bean>
+	<bean id="engProcessor" class="com.bizruntime.xpath.person.EngProcessor"></bean>
+	
+	
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+	<endpoint id="xmlFile" uri="file:/home/noorshid/Desktop/source?noop=true" />
+	<route>
+			<from ref="xmlFile"/>
+			<choice>
+				<when>
+					<xpath>//profession/name= 'Doctor'</xpath>
+					<process ref="doctorProcessor"></process>
+				</when>
+				<when>
+					<xpath>//profession/name= 'lawyer'</xpath>
+					<process ref="lawyerProcessor"></process>
+				</when>
+				<otherwise>
+					<process ref="engProcessor"></process>
+				</otherwise>
+			</choice>
+			<!-- <camel:process ref="doctorProcessor"></camel:process> -->
+</route>
+	</camelContext>
+
+</beans>

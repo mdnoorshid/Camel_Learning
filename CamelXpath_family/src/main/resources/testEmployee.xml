@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<emp>
+ <name>admin</name>
+ <phone>1234567890</phone>
+ <address>address 1</address>
+ <address>address 2</address>
+</emp>

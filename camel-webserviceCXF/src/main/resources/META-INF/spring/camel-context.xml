@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+
+	<cxf:cxfEndpoint id="camelCXFEndpoint"
+		address="http://www.webservicex.net/globalweather.asmx"
+		wsdlURL="globalweather.wsdl" serviceName="GlobalWeather"
+		endpointName="GlobalWeatherSoap" xmlns="http://www.webserviceX.NET"/>
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+		<route>
+			<from uri="timer://myTimer?period=50000" />
+			<log message="Message Logged Camel1" />
+			<setBody>
+				<simple>
+					&lt;soapenv:Envelope
+					xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+					xmlns:web=&quot;http://www.webserviceX.NET&quot;&gt;
+					&lt;soapenv:Header /&gt;
+					&lt;soapenv:Body&gt;
+					&lt;web:GetCitiesByCountry&gt;
+					&lt;!--Optional: --&gt;
+					&lt;web:CountryName&gt;India&lt;/web:CountryName&gt;
+					&lt;/web:GetCitiesByCountry&gt;
+					&lt;/soapenv:Body&gt;
+					&lt;/soapenv:Envelope&gt; </simple>
+			</setBody>
+			<setHeader headerName="soapAction">
+				<simple></simple>
+			</setHeader>
+			<to uri="cxf:bean:camelCXFEndpoint?dataFormat=MESSAGE" />
+			<convertBodyTo type="java.lang.String" />
+			<log message="Message Logged Camel2----->: ${body}" />
+			<log message="completed!!"></log>
+		</route>
+	</camelContext>
+	<http:conduit name="*.http-conduit">
+		<http:client AllowChunking="false" MaxRetransmits="11"
+			Connection="Keep-Alive" ReceiveTimeout="60000" CacheControl="No-Cache" />
+	</http:conduit>
+
+</beans>

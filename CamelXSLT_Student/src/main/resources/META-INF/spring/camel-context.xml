@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+    <bean id="testBean" class="com.bizruntime.xslt.student.TestBean"></bean>
+ 
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+        <from uri="file:/home/noorshid/Desktop/source?fileName=students.xml&amp;noop=true"/>
+        <to uri="xslt:/xsl/students.xsl"/>
+       <!--   <log message="${body}"/>
+           <log message="PROCESS COMPLTED"/> -->
+           <setHeader headerName="myStud">
+           <simple>${body}</simple>
+           </setHeader>
+           <log message="${in.header.myStud}"/>
+        <to uri="bean:testBean?method=processGetHeader"/>
+    </route>
+    <route>
+        <from uri="restlet:http://localhost:9991/studentdisp?restletMethod=GET"/>  
+        <to uri="bean:testBean?method=processGetBody"/> 
+        <log message="-----PROCESS COMPLTED------"/>
+    </route>
+</camelContext>
+</beans>
