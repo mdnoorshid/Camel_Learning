@@ -17,7 +17,7 @@ import com.bizruntime.util.Config;
 import com.bizruntime.util.DatabaseConnection;
 
 /**
- *This is the implement class which is implementing the 
+ *This is the implementation class which is implementing the
  *IEmployeeDao Service 
  */
 public class EmployeeDaoImpl implements IEmployeeDao {
@@ -28,6 +28,7 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 	Statement statement;
 	int auto_id;
 	Employee emp;
+	
 
 	/**
 	 * This method is to get all the Employees from the database
@@ -36,18 +37,9 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 	 */
 	public List<Employee> getAllEmployees() throws Exception {
 		List<Employee>employeeList=new ArrayList<Employee>();
+		List<Address> addresses = new ArrayList<Address>();
 		try {
-			int employee_id = 0;
-			String firstName = null;
-			String lastName = null;
-			int age = 0;
-			int addressId=0;
-			int departmentId = 0;
-			String location = null;
-			String town = null;
-			String street = null;
-			String country = null;
-
+			 
 			connection = DatabaseConnection.getConnection();
 			String sql ="SELECT employee.employee_id,employee.firstName,employee.lastName,employee.age,employee.department_id,address.address_id,"
 					+"address.location,address.town,address.street,address.country"
@@ -57,23 +49,23 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 			preparedStatement = connection.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				employee_id = resultSet.getInt(1);
-				firstName = resultSet.getString(2);
-				lastName = resultSet.getString(3);
-				age = resultSet.getInt(4);
-				departmentId = resultSet.getInt(5);
-				addressId=resultSet.getInt(6);
-				location = resultSet.getString(7);
-				town=resultSet.getString(8);
-				street=resultSet.getString(9);
-				country = resultSet.getString(10);
+				int employee_id = resultSet.getInt(1);
+				String firstName = resultSet.getString(2);
+				String lastName = resultSet.getString(3);
+				int age = resultSet.getInt(4);
+				int departmentId = resultSet.getInt(5);
+				int addressId=resultSet.getInt(6);
+				String location = resultSet.getString(7);
+				String town=resultSet.getString(8);
+				String street=resultSet.getString(9);
+				String country = resultSet.getString(10);
+				Address address = new Address(location, town, street, country);
+				addresses.add(address);
+				emp = new Employee(firstName, lastName, age, addresses,
+						departmentId);
+				employeeList.add(emp);
 			}
-			Address address = new Address(location, town, street, country);
-			List<Address> addresses = new ArrayList<Address>();
-			addresses.add(address);
-			emp = new Employee(firstName, lastName, age, addresses,
-					departmentId);
-			employeeList.add(emp);
+			
 		} catch (Exception e) {
 			throw new SqlExceptionFound("Sql Exception Interrupted!!", e);
 		}
@@ -326,6 +318,8 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 			String town = null;
 			String street = null;
 			String country = null;
+			Address address;
+			List<Address> addresses = new ArrayList<Address>();
 
 			connection = DatabaseConnection.getConnection();
 			String sql ="SELECT employee.employee_id,employee.firstName,employee.lastName,employee.age,employee.department_id,address.address_id,"
@@ -347,12 +341,12 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 				town=resultSet.getString(8);
 				street=resultSet.getString(9);
 				country = resultSet.getString(10);
+				 address= new Address(location, town, street, country);
+				 addresses.add(address);
+				emp = new Employee(firstName, lastName, age, addresses,
+						departmentId);
 			}
-			Address address = new Address(location, town, street, country);
-			List<Address> addresses = new ArrayList<Address>();
-			addresses.add(address);
-			emp = new Employee(firstName, lastName, age, addresses,
-					departmentId);
+			
 		} catch (Exception e) {
 			throw new SqlExceptionFound("Sql Exception Interrupted!!", e);
 		}
