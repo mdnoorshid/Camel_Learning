@@ -171,11 +171,11 @@ public class EmployeeBackupDaoImpl implements IEmployeeBackupDao {
 	 * @param EmployeeId:This is the employee id and data type is Integer
 	 * @throws SqlExceptionFound
 	 */
-	public void deleteEmployee(int EmployeeId) throws Exception {
+	public void deleteEmployee(int EmployeeId,Connection conn) throws Exception {
 		try {
 			connection = DatabaseConnection.getConnection();
 			String sql = "DELETE FROM CompanyBackUp.employee WHERE employee_id = ?";
-			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setInt(1, EmployeeId);
 			// execute delete SQL stetement
 			int i = preparedStatement.executeUpdate();
@@ -211,8 +211,5 @@ public class EmployeeBackupDaoImpl implements IEmployeeBackupDao {
 				throw new SqlExceptionFound("Sql Exception Interrupted!!", e);
 			}
 	}
-
-		
 	}
-
 }

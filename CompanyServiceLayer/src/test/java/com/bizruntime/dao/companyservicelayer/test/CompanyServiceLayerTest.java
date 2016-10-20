@@ -18,6 +18,11 @@ import com.bizruntime.dao.persistence.impl.EmployeeDaoImpl;
 import com.bizruntime.dao.persistence.impl.SqlExceptionFound;
 import com.bizruntime.util.DatabaseConnection;
 
+/**
+ * This class represents the test functionality for the CompanyService Layer
+ * @author bizruntime
+ *
+ */
 public class CompanyServiceLayerTest 
 {
 	static Logger log=Logger.getLogger(CompanyServiceLayerTest.class);
@@ -37,6 +42,7 @@ public class CompanyServiceLayerTest
 	public void closeResources() throws SQLException, ConnectionCloseException{
 		try{
 			conn.close();
+			log.debug("Connection Closed!!");
 		}catch(Exception e){
 		  throw new ConnectionCloseException("Connection Close Exception!!");
 		}
@@ -86,7 +92,7 @@ public class CompanyServiceLayerTest
 	 * This method is responsible for fetching all employees from the Employee table
 	 * @throws FetchingErrorException
 	 */
-	@Test
+/*	@Test
 	public void getAllEmployees() throws FetchingErrorException{
 		try{
 		List<Employee>employeesList=new CompanyManagementDaoServiceImpl().getAllEmployees(conn);
@@ -98,5 +104,18 @@ public class CompanyServiceLayerTest
 		catch(Exception e){
 			throw new FetchingErrorException("Fetching problem!!",e);
 		}
-	}	
+	}	*/
+	/**
+	 * This method is responsible for deleting the Employee from the table 
+	 * @throws Exception
+	 */
+	@Test
+	public void deleteEmployee() throws Exception{
+		try{
+		new CompanyManagementDaoServiceImpl().deleteEmployee(23,1, conn);
+		}catch(Exception e){
+			throw new FailToDeleteException("Failed to delete",e);
+		}
+		
+	}
 }

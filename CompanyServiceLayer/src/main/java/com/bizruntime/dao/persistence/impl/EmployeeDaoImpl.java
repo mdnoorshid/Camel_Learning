@@ -280,11 +280,11 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 	 * Database
 	 * @param EmployeeId:This is the id of the Employee
 	 */
-	public void deleteEmployee(int EmployeeId) throws Exception {
+	public void deleteEmployee(int EmployeeId,Connection conn) throws Exception {
 		try {
 			connection = DatabaseConnection.getConnection();
 			String sql = "DELETE FROM Company.employee WHERE employee_id = ?";
-			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setInt(1, EmployeeId);
 			// execute delete SQL stetement
 			int i = preparedStatement.executeUpdate();
@@ -312,13 +312,7 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 			}catch(Exception e){
 				throw new SqlExceptionFound("Sql Exception Interrupted!!", e);
 			}
-			try{
-				if(connection !=null){
-				 	connection.close();
-				}
-			}catch(Exception e){
-				throw new SqlExceptionFound("Sql Exception Interrupted!!", e);
-			}
+			
 	}
 	}
 

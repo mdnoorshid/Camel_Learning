@@ -41,11 +41,11 @@ public class CompanyManagementDaoServiceImpl implements ICompanyManagementDaoSer
 	 * @param empId:This is the id of the of the Employee in the Company.employee table and data type is integer
 	 * @param empBackupId:This is the id of the of the Employee in the CompanyBackUp.employee table and data type is integer
 	 */
-	public void deleteEmployee(int empId,int empBackupId) throws Exception {
+	public void deleteEmployee(int empId,int empBackupId,Connection conn) throws Exception {
 		EmployeeDaoImpl employeeDaoImpl=new EmployeeDaoImpl();
 		EmployeeBackupDaoImpl employeeBackupDaoImpl=new EmployeeBackupDaoImpl();
-		employeeDaoImpl.deleteEmployee(empId);
-		employeeBackupDaoImpl.deleteEmployee(empBackupId);
+		employeeDaoImpl.deleteEmployee(empId,conn);
+		employeeBackupDaoImpl.deleteEmployee(empBackupId,conn);
 	}
 
 	public List<Employee> getAllEmployees(Connection conn) throws Exception {

@@ -14,5 +14,5 @@ public interface ICompanyManagementDaoService
  public void insertEmployee(Employee employee,Connection conn) throws Exception;
  public Employee getEmployeewithAddress(int empId,Connection conn) throws Exception;
  public List<Employee> getAllEmployees(Connection conn) throws Exception;
- public void deleteEmployee(int empId,int empBackupId) throws Exception;
+ public void deleteEmployee(int empId,int empBackupId,Connection conn) throws Exception;
 }
