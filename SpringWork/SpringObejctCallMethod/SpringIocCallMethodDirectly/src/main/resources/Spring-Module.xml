@@ -1,0 +1,17 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+<!-- <bean id="callNonStaticName" class="com.bizruntime.spring.ioc.callmethoddirectly.CallNonStatic"
+factory-method="getName">
+</bean> -->
+
+<bean id="static" class="com.bizruntime.spring.ioc.callmethoddirectly.JavaBean"
+factory-method="getStaticName">
+   <constructor-arg value="Md"/>
+</bean>
+<!-- <bean id="nonstatic" class="com.bizruntime.spring.ioc.callmethoddirectly.JavaBean"
+factory-method="getNonStaticName" factory-bean="getNonStaticName">
+</bean>
+ -->
+</beans>
